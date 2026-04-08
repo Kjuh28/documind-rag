@@ -1,0 +1,18 @@
+# Ambientes virtuais
+venv/
+backend/venv/
+
+# Dados e Modelos (Docker)
+data/
+
+# Cache do Python
+**/__pycache__/
+*.py[cod]
+
+# Variáveis de ambiente (Segurança)
+.env
+**/.env
+
+# IDEs
+.vscode/
+.idea/

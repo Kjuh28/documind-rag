@@ -1,0 +1,20 @@
+services:
+  # O Banco de Dados Vetorial (Onde a IA "lembra" das coisas)
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: documind-vector-db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/chroma:/chroma/data
+    environment:
+      - IS_PERSISTENT=TRUE
+
+  # O Motor da IA (Ollama) - Roda modelos localmente
+  ollama:
+    image: ollama/ollama:latest
+    container_name: documind-brain
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
