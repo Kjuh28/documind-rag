@@ -4,11 +4,13 @@ services:
     image: chromadb/chroma:latest
     container_name: documind-vector-db
     ports:
-      - "8000:8000"
+      - "8001:8000" 
     volumes:
       - ./data/chroma:/chroma/data
     environment:
       - IS_PERSISTENT=TRUE
+    networks:
+      - documind-network
 
   # O Motor da IA (Ollama) - Roda modelos localmente
   ollama:
@@ -18,3 +20,32 @@ services:
       - "11434:11434"
     volumes:
       - ./data/ollama:/root/.ollama
+    networks:
+      - documind-network
+
+  # O seu Backend FastAPI otimizado com UV
+  backend:
+    build:
+      context: ./backend 
+      dockerfile: Dockerfile
+    container_name: documind-api
+    ports:
+      - "8000:8000" 
+    volumes:
+      - ./backend:/app # <-- Live Reload: Se você mudar o código na máquina, muda no container
+      # Evita que o volume do seu computador sobrescreva as dependências instaladas pelo UV no container
+      - /app/.venv 
+    environment:
+      - ENVIRONMENT=production
+      - CHROMA_HOST=chromadb 
+      - CHROMA_PORT=8000   
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - chromadb
+    networks:
+      - documind-network
+
+# Criação de uma rede isolada para os containers conversarem de forma segura entre si
+networks:
+  documind-network:
+    driver: bridge

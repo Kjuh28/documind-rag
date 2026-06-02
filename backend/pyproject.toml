@@ -1,0 +1,31 @@
+[project]
+name = "documind-backend"
+version = "0.1.0"
+description = "Backend unificado para DocuMind RAG e Spaced Repetition"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "sqlalchemy>=2.0.0",
+    "atlas-provider-sqlalchemy>=0.2.4", # <-- A ponte mágica do Atlas
+    "langchain-chroma>=0.1.0",
+    "langchain-ollama>=0.1.0",
+    "langchain-text-splitters>=0.0.1",
+    "langchain-core>=0.1.0",
+    "python-multipart>=0.0.9",
+    "ollama>=0.2.0",
+    "python-dotenv>=1.0.1",
+    "langchain-community>=0.4.2",
+]
+
+[tool.uv]
+managed = true
+
+[project.scripts]
+dev = "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+start = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+[tool.ruff.lint]
+ignore = ["E712"] # Permite comparações do SQLAlchemy como 'column == True' sem acusar erro
