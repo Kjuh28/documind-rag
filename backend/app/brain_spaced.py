@@ -21,7 +21,7 @@ def extract_spaced_concept(term: str, context: str) -> OllamaResponse:
 
     # Chamada ao modelo de IA
     response = ollama.chat(
-        model="llama3",
+        model="qwen2:1.5b",
         messages=[
             {"role": "user", "content": prompt}
         ],

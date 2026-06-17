@@ -22,8 +22,9 @@ class Settings(BaseSettings):
     CHROMA_DATA_PATH: str = "../data/chroma"
 
     # Modelo Ollama
-    OLLAMA_MODEL: str = "llama3"
-    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "qwen2:1.5b"
+    OLLAMA_EMBEDDING_MODEL: str = "nomic-embed-text"
+    OLLAMA_BASE_URL: str = os.getenv("OLLAMA_HOST", "http://ollama:11434")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="allow")
 
