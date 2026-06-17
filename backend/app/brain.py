@@ -4,7 +4,7 @@ class DocuMindBrain:
     def __init__(self):
         # Conecta no container que você acabou de testar no terminal
         self.llm = OllamaLLM(
-            model="llama3",
+            model="qwen2:1.5b",
             base_url="http://localhost:11434"
         )
 
